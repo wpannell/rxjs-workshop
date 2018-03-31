@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "a workshop for rxjs",
   "main": "index.js",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run server:lint && npm run server:spec"
+    }
+  },
   "scripts": {
+    "prepush": "npm run server:lint && npm run server:spec",
     "start": "node exercises/demo-server/app.js",
     "server:lint": "esw -f simple-detail --clear server",
     "server:lint:watch": "npm run --silent server:lint -- -w",
@@ -11,7 +17,7 @@
     "server:start:reload": "npm run server:start & browser-sync start --proxy 'localhost:3001' --files 'dist-server'",
     "server:spec": "NODE_ENV=TEST rimraf .tmp && mocha-webpack --webpack-config webpack.server.config.spec.js --reporter spec --growl --colors --timeout 10000 --require source-map-support/register server/spec/helper.js \"server/**/*.spec.js\"",
     "server:spec:watch": "npm run server:spec -- --watch",
-    "server:tdd": "npm run server:spec:watch",
+    "tdd": "npm run server:spec:watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "split-guide generate --templates-dir src/"
   },
